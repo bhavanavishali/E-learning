@@ -1,48 +1,57 @@
+{% load static %}
 <header class="my_header ">
-    <div class="row text-black">
-        <div class="col-md-6 p-3 ps-5">
-            <h2>BV Academy </h2>
-        </div>
+  <div class="row text-black">
+      <div class="col-md-4 ">
+        <a><b><img src="{% static 'img/mytech.png' %}" height="100px" width="100px"> B V V ACADEMY</b></a>
+      </div>
 
-        <div class="col-md-6 pe-3">
-            <nav class="navbar navbar-expand-lg ">
-                <div class="container-fluid">
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">Explore course</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">Sign Up</a>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><hr class="dropdown-divider"></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active " aria-disabled="true">Login</a>
-                      </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                  </div>
+      <div class="col-md-8 pt-3 ps-5">
+          <nav class="navbar navbar-expand-lg ">
+              <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Courses
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">All Products</a></li>
+                        {% for cat in links %}
+                        <li><a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active " href="{% url 'learningapp:logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link active" href="{% url 'learningapp:register' %}">Regiter</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                      <a class="nav-link active " href="{% url 'learningapp:login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                    <!-- <li class="nav-item">
+                      <a class="nav-link" href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                    </li> -->
+                  </ul>
+                  <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
                 </div>
-              </nav>
+              </div>
+            </nav>
 
-        </div>
-    </div>
-
-    
+      </div>
+  </div>
 </header>

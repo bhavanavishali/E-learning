@@ -1,11 +1,12 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.models import User
 from django.contrib import messages ,auth
+from .models import Course,Category
 
 # Create your views here.
 def index(request):
-    return render(request,'index.html')
+    return render(request,'base.html')
 def register(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -39,9 +40,25 @@ def login(request):
             if user.is_staff:
                 return render(request, 'adminlogin.html')  # Render admin template for staff members
             else:
-                return render(request, 'userlogin.html')  # Render user template for regular users
+                return redirect('learningapp:index')
+                # return render(request,'userlogin.html')  # Render user template for regular users
         
         else:
             return HttpResponse('error')  # Render a template for failed login
 
     return render(request, 'login.html')
+
+def allProCat(request,c_slug=None):
+    courses = None
+    c_page = None
+    if c_slug != None:
+        c_page = get_object_or_404(Category,slug=c_slug)
+        courses = Course.objects.all().filter(category=c_page,available=True)
+    else:
+        courses = Course.objects.all().filter(available=True)
+    return render(request,'userlogin.html',{'courses':courses,'category':c_page})
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('learningapp:index')

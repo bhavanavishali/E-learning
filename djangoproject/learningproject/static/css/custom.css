@@ -18,3 +18,9 @@ header{
     border-radius: 12px;
     background-color: #85AFD0;
 }
+
+.my_footer{
+    background-color: khaki;
+    height: 60px;
+    padding-top: 20px;
+}
